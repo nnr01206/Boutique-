@@ -2,43 +2,39 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>周邊選物與推薦書單</title>
     <style>
-        /* 全局與手機版型設定 */
+        /* 基礎設定：移除所有多餘的背景與置中，讓網頁自然貼合螢幕 */
         body {
             font-family: "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background-color: #f5f7f9; /* 整個網頁的底色 */
             margin: 0;
-            padding: 20px 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent; /* 移除手機點擊閃爍 */
         }
 
-        .mobile-wrapper {
-            background-color: #f9f9f9;
-            width: 100%;
-            max-width: 375px;
-            height: 812px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+        /* 內容主容器：手機滿版，電腦版最大寬度 600px 置中 */
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #f5f7f9;
+            min-height: 100vh;
+            padding-bottom: 90px; /* 底部留白，避免被固定按鈕擋住 */
+            box-sizing: border-box;
         }
 
-        /* 頂部導航 */
+        /* 頂部導航：改為 fixed 吸頂，真正的手機網頁體驗 */
         .app-header {
             background: #ffffff;
-            padding: 20px 25px;
+            padding: 15px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            z-index: 10;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .app-header h1 {
@@ -49,11 +45,9 @@
 
         .back-icon { color: #888; font-size: 1.2rem; cursor: pointer; text-decoration: none; }
 
-        /* 內容滾動區 */
-        .content-scroll {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 20px 20px 100px 20px; /* 底部留白給固定按鈕 */
+        /* 內容區 */
+        .content-area {
+            padding: 20px;
         }
 
         /* 區塊標題 */
@@ -77,35 +71,34 @@
         /* 商品卡片 */
         .product-card {
             background: #ffffff;
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             display: flex;
             flex-direction: column;
         }
 
-        /* --- 圖片容器與設定 --- */
+        /* 圖片容器與設定 */
         .img-container {
             width: 100%;
-            height: 140px; /* 紀念品圖片高度 */
-            background-color: #eef2f5; /* 圖片載入前的底色 */
+            height: 140px;
+            background-color: #eef2f5;
             overflow: hidden;
         }
 
         .img-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 讓圖片完美填滿容器且不變形 */
+            object-fit: cover;
             display: block;
         }
 
-        /* 書籍特化圖片高度 */
         .book-card .img-container {
-            height: 160px; /* 書籍圖片稍微拉長一點 */
+            height: 160px;
             background-color: #fcebc5;
         }
-        /* ---------------------- */
 
+        /* 商品文字資訊 */
         .product-info {
             padding: 12px;
             display: flex;
@@ -138,16 +131,19 @@
             margin: auto 0 0 0;
         }
 
-        /* 底部固定按鈕區 */
+        /* 底部固定按鈕區：吸底設計 */
         .sticky-footer {
-            position: absolute;
+            position: fixed;
             bottom: 0;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%); /* 確保在電腦螢幕上也能跟著 app-container 置中 */
             width: 100%;
-            background: linear-gradient(to top, rgba(255,255,255,1) 70%, rgba(255,255,255,0));
-            padding: 20px 25px 30px 25px;
+            max-width: 600px; /* 與 app-container 寬度一致 */
+            background: linear-gradient(to top, rgba(245,247,249,1) 60%, rgba(245,247,249,0));
+            padding: 15px 20px 25px 20px;
             box-sizing: border-box;
             text-align: center;
+            z-index: 100;
         }
 
         .btn-primary {
@@ -156,37 +152,31 @@
             color: #ffffff;
             text-decoration: none;
             padding: 15px;
-            border-radius: 15px;
+            border-radius: 12px;
             font-size: 1.1rem;
             font-weight: bold;
-            box-shadow: 0 5px 15px rgba(26, 42, 58, 0.3);
+            box-shadow: 0 4px 15px rgba(26, 42, 58, 0.2);
             transition: transform 0.1s;
         }
 
         .btn-primary:active { transform: scale(0.98); }
-        
-        /* 隱藏滾動條 */
-        .content-scroll::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
-<div class="mobile-wrapper">
+<div class="app-container">
     <div class="app-header">
         <a href="javascript:history.back()" class="back-icon">❮</a>
         <h1>紀念品與推薦書單</h1>
         <div style="width: 20px;"></div>
     </div>
 
-    <div class="content-scroll">
+    <div class="content-area">
         
         <h2 class="section-title">限定紀念品</h2>
         <div class="product-grid">
-            
             <div class="product-card">
-                <div class="img-container">
-                    <img src="./images/canvas-bag.jpg" alt="閱讀帆布袋">
-                </div>
+                <div class="img-container"><img src="./images/canvas-bag.jpg" alt="閱讀帆布袋"></div>
                 <div class="product-info">
                     <h3 class="product-title">閱讀帆布袋</h3>
                     <p class="product-desc">將喜歡的字句揹著走，不管是書本還是生活，都能裝進這份質感與從容。</p>
@@ -195,9 +185,7 @@
             </div>
 
             <div class="product-card">
-                <div class="img-container">
-                    <img src="./images/scented-candle.jpg" alt="沉浸式香氛蠟燭">
-                </div>
+                <div class="img-container"><img src="./images/scented-candle.jpg" alt="沉浸式香氛蠟燭"></div>
                 <div class="product-info">
                     <h3 class="product-title">沉浸式香氛蠟燭</h3>
                     <p class="product-desc">點燃木質與書頁的香氣，讓閱讀時光多一份溫暖與平靜，陪伴你的每個深夜。</p>
@@ -206,9 +194,7 @@
             </div>
 
             <div class="product-card">
-                <div class="img-container">
-                    <img src="./images/metal-bookmark.jpg" alt="閱讀金屬書籤">
-                </div>
+                <div class="img-container"><img src="./images/metal-bookmark.jpg" alt="閱讀金屬書籤"></div>
                 <div class="product-info">
                     <h3 class="product-title">閱讀金屬書籤</h3>
                     <p class="product-desc">為停下的故事做個優雅的記號，精緻工藝，讓每次翻閱都充滿儀式感。</p>
@@ -217,9 +203,7 @@
             </div>
 
             <div class="product-card">
-                <div class="img-container">
-                    <img src="./images/inspiration-notebook.jpg" alt="靈感手帳本">
-                </div>
+                <div class="img-container"><img src="./images/inspiration-notebook.jpg" alt="靈感手帳本"></div>
                 <div class="product-info">
                     <h3 class="product-title">靈感手帳本</h3>
                     <p class="product-desc">留白給你的思緒與靈感，質感紙頁適合各種筆觸，寫下屬於你的日常篇章。</p>
@@ -228,9 +212,7 @@
             </div>
 
             <div class="product-card">
-                <div class="img-container">
-                    <img src="./images/reading-mug.jpg" alt="閱讀時光馬克杯">
-                </div>
+                <div class="img-container"><img src="./images/reading-mug.jpg" alt="閱讀時光馬克杯"></div>
                 <div class="product-info">
                     <h3 class="product-title">閱讀時光馬克杯</h3>
                     <p class="product-desc">泡一杯咖啡或熱茶，搭配一本好書，手心裡的溫度是你最愜意的陪伴。</p>
@@ -239,25 +221,19 @@
             </div>
 
             <div class="product-card">
-                <div class="img-container">
-                    <img src="./images/postcard-set.jpg" alt="文字明信片組">
-                </div>
+                <div class="img-container"><img src="./images/postcard-set.jpg" alt="文字明信片組"></div>
                 <div class="product-info">
                     <h3 class="product-title">文字明信片組</h3>
                     <p class="product-desc">精選治癒語錄，適合寄給思念的人，或是貼在牆上，給自己每日的溫柔提醒。</p>
                     <p class="product-price">NT$ 150</p>
                 </div>
             </div>
-            
         </div>
 
         <h2 class="section-title">推薦書單</h2>
         <div class="product-grid">
-            
             <div class="product-card book-card">
-                <div class="img-container">
-                    <img src="./images/book-01.jpg" alt="推薦書籍一">
-                </div>
+                <div class="img-container"><img src="./images/book-01.jpg" alt="推薦書籍一"></div>
                 <div class="product-info">
                     <h3 class="product-title">推薦書籍一</h3>
                     <p class="product-desc">書籍簡介預留位子，後續可填入詳細內容...</p>
@@ -265,9 +241,7 @@
             </div>
 
             <div class="product-card book-card">
-                <div class="img-container">
-                    <img src="./images/book-02.jpg" alt="推薦書籍二">
-                </div>
+                <div class="img-container"><img src="./images/book-02.jpg" alt="推薦書籍二"></div>
                 <div class="product-info">
                     <h3 class="product-title">推薦書籍二</h3>
                     <p class="product-desc">書籍簡介預留位子，後續可填入詳細內容...</p>
@@ -275,9 +249,7 @@
             </div>
 
             <div class="product-card book-card">
-                <div class="img-container">
-                    <img src="./images/book-03.jpg" alt="推薦書籍三">
-                </div>
+                <div class="img-container"><img src="./images/book-03.jpg" alt="推薦書籍三"></div>
                 <div class="product-info">
                     <h3 class="product-title">推薦書籍三</h3>
                     <p class="product-desc">書籍簡介預留位子，後續可填入詳細內容...</p>
@@ -285,15 +257,12 @@
             </div>
 
             <div class="product-card book-card">
-                <div class="img-container">
-                    <img src="./images/book-04.jpg" alt="推薦書籍四">
-                </div>
+                <div class="img-container"><img src="./images/book-04.jpg" alt="推薦書籍四"></div>
                 <div class="product-info">
                     <h3 class="product-title">推薦書籍四</h3>
                     <p class="product-desc">書籍簡介預留位子，後續可填入詳細內容...</p>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -305,7 +274,6 @@
 
 <script>
     function redirectToThanks() {
-        // 延遲 1 秒 (1000毫秒) 後跳轉，確保表單的新分頁有成功彈出
         setTimeout(function() {
             window.location.href = 'thanks.html';
         }, 1000);
