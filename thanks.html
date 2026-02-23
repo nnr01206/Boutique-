@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>感謝您的填寫</title>
+    <style>
+        /* 基礎設定與展示頁相同 */
+        body {
+            font-family: "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        .mobile-wrapper {
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 375px;
+            height: 812px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        /* 成功圖示 */
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #fcebc5;
+            color: #d4af37;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            box-shadow: 0 0 0 10px rgba(252, 235, 197, 0.4);
+        }
+
+        h1 {
+            color: #1a2a3a;
+            font-size: 1.8rem;
+            margin: 0 0 15px 0;
+        }
+
+        p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0 0 40px 0;
+        }
+
+        /* LINE 按鈕特化樣式 */
+        .btn-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #06C755; /* LINE 官方綠色 */
+            color: #ffffff;
+            text-decoration: none;
+            width: 100%;
+            padding: 16px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(6, 199, 85, 0.3);
+            transition: transform 0.1s;
+        }
+
+        .btn-line:active { transform: scale(0.98); }
+
+        /* 裝飾圖案 */
+        .bg-decoration {
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            font-size: 150px;
+            opacity: 0.03;
+            z-index: 0;
+        }
+        
+        .content-layer {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="mobile-wrapper">
+    <div class="bg-decoration">📖</div>
+    
+    <div class="content-layer">
+        <div class="success-icon">✓</div>
+        <h1>表單已送出</h1>
+        <p>感謝您的選購與支持！<br>我們已收到您的資料。<br><br>為了方便後續聯絡與確認訂單，<br>請務必加入我們的官方 LINE 好友。</p>
+
+        <a href="https://lin.ee/your_link_here" target="_blank" class="btn-line">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738S0 4.935 0 10.304c0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.057.592.119.303.079.758.038 1.08l-.164.985c-.05.3-.241 1.186 1.039.647 1.28-.54 6.911-4.069 9.428-6.967C23.13 14.28 24 12.399 24 10.304z"/>
+            </svg>
+            加入官方 LINE 好友
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

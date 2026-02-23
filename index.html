@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>周邊選物與推薦書單</title>
+    <style>
+        /* 全局與手機版型設定 */
+        body {
+            font-family: "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        .mobile-wrapper {
+            background-color: #f9f9f9;
+            width: 100%;
+            max-width: 375px;
+            height: 812px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 頂部導航 */
+        .app-header {
+            background: #ffffff;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+
+        .app-header h1 {
+            font-size: 1.1rem;
+            margin: 0;
+            color: #1a2a3a;
+        }
+
+        .back-icon { color: #888; font-size: 1.2rem; cursor: pointer; text-decoration: none; }
+
+        /* 內容滾動區 */
+        .content-scroll {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px 20px 100px 20px; /* 底部留白給固定按鈕 */
+        }
+
+        /* 區塊標題 */
+        .section-title {
+            font-size: 1.2rem;
+            color: #1a2a3a;
+            border-left: 4px solid #e0c097;
+            padding-left: 10px;
+            margin: 0 0 15px 0;
+            font-weight: bold;
+        }
+
+        /* 商品網格佈局 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* 商品卡片 */
+        .product-card {
+            background: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- 圖片容器與設定 --- */
+        .img-container {
+            width: 100%;
+            height: 140px; /* 紀念品圖片高度 */
+            background-color: #eef2f5; /* 圖片載入前的底色 */
+            overflow: hidden;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 讓圖片完美填滿容器且不變形 */
+            display: block;
+        }
+
+        /* 書籍特化圖片高度 */
+        .book-card .img-container {
+            height: 160px; /* 書籍圖片稍微拉長一點 */
+            background-color: #fcebc5;
+        }
+        /* ---------------------- */
+
+        .product-info {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-title {
+            font-size: 0.95rem;
+            color: #2c3e50;
+            margin: 0 0 5px 0;
+            font-weight: bold;
+        }
+
+        .product-desc {
+            font-size: 0.75rem;
+            color: #777;
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 0.9rem;
+            color: #e76f51;
+            font-weight: bold;
+            margin: auto 0 0 0;
+        }
+
+        /* 底部固定按鈕區 */
+        .sticky-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(255,255,255,1) 70%, rgba(255,255,255,0));
+            padding: 20px 25px 30px 25px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .btn-primary {
+            display: block;
+            background-color: #1a2a3a;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(26, 42, 58, 0.3);
+            transition: transform 0.1s;
+        }
+
+        .btn-primary:active { transform: scale(0.98); }
+        
+        /* 隱藏滾動條 */
+        .content-scroll::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="mobile-wrapper">
+    <div class="app-header">
+        <a href="javascript:history.back()" class="back-icon">❮</a>
+        <h1>紀念品與推薦書單</h1>
+        <div style="width: 20px;"></div>
+    </div>
+
+    <div class="content-scroll">
+        
+        <h2 class="section-title">限定紀念品</h2>
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="img-container">
+                    <img src="./images/canvas-bag.jpg" alt="閱讀帆布袋">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">閱讀帆布袋</h3>
+                    <p class="product-desc">將喜歡的字句揹著走，不管是書本還是生活，都能裝進這份質感與從容。</p>
+                    <p class="product-price">NT$ 350</p>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-container">
+                    <img src="./images/scented-candle.jpg" alt="沉浸式香氛蠟燭">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">沉浸式香氛蠟燭</h3>
+                    <p class="product-desc">點燃木質與書頁的香氣，讓閱讀時光多一份溫暖與平靜，陪伴你的每個深夜。</p>
+                    <p class="product-price">NT$ 480</p>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-container">
+                    <img src="./images/metal-bookmark.jpg" alt="閱讀金屬書籤">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">閱讀金屬書籤</h3>
+                    <p class="product-desc">為停下的故事做個優雅的記號，精緻工藝，讓每次翻閱都充滿儀式感。</p>
+                    <p class="product-price">NT$ 180</p>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-container">
+                    <img src="./images/inspiration-notebook.jpg" alt="靈感手帳本">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">靈感手帳本</h3>
+                    <p class="product-desc">留白給你的思緒與靈感，質感紙頁適合各種筆觸，寫下屬於你的日常篇章。</p>
+                    <p class="product-price">NT$ 250</p>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-container">
+                    <img src="./images/reading-mug.jpg" alt="閱讀時光馬克杯">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">閱讀時光馬克杯</h3>
+                    <p class="product-desc">泡一杯咖啡或熱茶，搭配一本好書，手心裡的溫度是你最愜意的陪伴。</p>
+                    <p class="product-price">NT$ 300</p>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="img-container">
+                    <img src="./images/postcard-set.jpg" alt="文字明信片組">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">文字明信片組</h3>
+                    <p class="product-desc">精選治癒語錄，適合寄給思念的人，或是貼在牆上，給自己每日的溫柔提醒。</p>
+                    <p class="product-price">NT$ 150</p>
+                </div>
+            </div>
+            
+        </div>
+
+        <h2 class="section-title">推薦書單</h2>
+        <div class="product-grid">
+            
+            <div class="product-card book-card">
+                <div class="img-container">
+                    <img src="./images/book-01.jpg" alt="推薦書籍一">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">推薦書籍一</h3>
+                    <p class="product-desc">書籍簡介預留位子，後續可填入詳細內容...</p>
+                </div>
+            </div>
+
+            <div class="product-card book-card">
+                <div class="img-container">
+                    <img src="./images/book-02.jpg" alt="推薦書籍二">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">推薦書籍二</h3>
+                    <p class="product-desc">書籍簡介預留位子，後續可填入詳細內容...</p>
+                </div>
+            </div>
+
+            <div class="product-card book-card">
+                <div class="img-container">
+                    <img src="./images/book-03.jpg" alt="推薦書籍三">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">推薦書籍三</h3>
+                    <p class="product-desc">書籍簡介預留位子，後續可填入詳細內容...</p>
+                </div>
+            </div>
+
+            <div class="product-card book-card">
+                <div class="img-container">
+                    <img src="./images/book-04.jpg" alt="推薦書籍四">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">推薦書籍四</h3>
+                    <p class="product-desc">書籍簡介預留位子，後續可填入詳細內容...</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="sticky-footer">
+        <a href="您的Google表單連結" target="_blank" class="btn-primary" onclick="redirectToThanks()">前往選購填單 🛒</a>
+    </div>
+
+</div>
+
+<script>
+    function redirectToThanks() {
+        // 延遲 1 秒 (1000毫秒) 後跳轉，確保表單的新分頁有成功彈出
+        setTimeout(function() {
+            window.location.href = 'thanks.html';
+        }, 1000);
+    }
+</script>
+
+</body>
+</html>
